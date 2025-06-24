@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
         using: function () {
             require base_path('Modules/Auth/Routes/api.php');
             require base_path('Modules/User/Routes/api.php');
+            require base_path('Modules/Product/Routes/api.php');
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
