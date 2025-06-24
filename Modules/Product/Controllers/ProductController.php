@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
         return response()->json(['data' => $products]);
     }
 
@@ -20,6 +20,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $product = Product::create($validated);
