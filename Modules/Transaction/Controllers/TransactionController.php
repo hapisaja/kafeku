@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Transaction\Models\Transaction;
 use Modules\Transaction\Models\TransactionItem;
 use Modules\Product\Models\Product;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TransactionController
 {
@@ -133,4 +134,11 @@ class TransactionController
         return response()->json($bestProducts);
     }
 
+    public function printReceipt($id)
+    {
+        $transaction = Transaction::with(['user', 'items.product'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('receipt', compact('transaction'));
+        return $pdf->stream("struk-transaksi-{$transaction->id}.pdf");
+    }
 }
