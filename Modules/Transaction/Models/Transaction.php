@@ -8,7 +8,7 @@ use App\Models\User;
 
 class Transaction extends Model
 {
-    protected $fillable = ['user_id', 'total_price'];
+    protected $fillable = ['user_id', 'total_price', 'customer_name', 'payment_method'];
 
     public function user()
     {

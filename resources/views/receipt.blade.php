@@ -17,6 +17,8 @@
 
     <p><strong>Tanggal:</strong> {{ $transaction->created_at->format('d M Y H:i') }}</p>
     <p><strong>Kasir:</strong> {{ $transaction->user->name }}</p>
+    <p><strong>Customer:</strong> {{ $transaction->customer_name ?? 'Umum' }}</p>
+    <p><strong>Metode Pembayaran:</strong> {{ $transaction->payment_method ?? '-' }}</p>
 
     <table width="100%" class="items">
         <thead>

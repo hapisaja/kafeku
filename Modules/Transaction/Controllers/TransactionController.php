@@ -33,6 +33,8 @@ class TransactionController
             'items' => 'required|array|min:1',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.qty' => 'required|integer|min:1',
+            'customer_name' => 'nullable|string|max:255',
+            'payment_method' => 'nullable|in:cash,qr,debit',
         ]);
 
         DB::beginTransaction();
@@ -64,6 +66,8 @@ class TransactionController
             $transaction = Transaction::create([
                 'user_id' => Auth::id(),
                 'total_price' => $total,
+                'customer_name' => $request->customer_name,
+                'payment_method' => $request->payment_method,
             ]);
 
             foreach ($itemsData as $data) {
@@ -73,7 +77,9 @@ class TransactionController
 
             DB::commit();
 
-            return response()->json(['message' => 'Transaksi berhasil disimpan', 'data' => $transaction->load('items.product')], 201);
+            return response()->json([
+                'message' => 'Transaksi berhasil disimpan',
+                'data' => $transaction->load('items.product')], 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()], 400);
