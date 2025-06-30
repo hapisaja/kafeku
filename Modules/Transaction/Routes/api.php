@@ -10,5 +10,6 @@ Route::middleware(['auth:sanctum'])->prefix('transaction')->group(function () {
     Route::get('/report/sales', [TransactionController::class, 'salesReport']);
     Route::get('/report/sales/monthly', [TransactionController::class, 'monthlySalesReport']);
     Route::get('/report/best-products', [TransactionController::class, 'bestSellingProducts']);
-    Route::get('/{id}/receipt', [TransactionController::class, 'printReceipt']);
+    
 });
+Route::get('transaction/{id}/receipt', [TransactionController::class, 'printReceipt']);
